@@ -14,20 +14,20 @@
     <div class="container">
       <div class="row mt-2">
         <div class="col-6 coffee-list d-flex flex-column justify-content-around">
-          <div class="coffee-item">
+          <div class="coffee-item" cost="50" data-name="Американо" data-name-eng="Americano" onclick ="cookCoffee('Americano', 50, this)" > <!-- способдобавления кода на JS в HTML oncklick-->
             <img src="img/americano.png" alt="Американо">
             <span>Американо - 50</span>
           </div>  
-          <div class="coffee-item">
+          <div class="coffee-item" onclick ="cookCoffee('Cappuccino', 92, this)">
             <img src="img/cappuccino.png" alt="Капучино">
             <span>Капучино - 92</span>
           </div>
-          <div class="coffee-item">
-            <img src="img/espresso.png" alt="Эспрессо">
+          <div class="coffee-item" onclick ="cookCoffee('Espresso', 66, this)">
+            <img src="img/espresso.png" alt="Эспрессо" >
             <span>Эспрессо - 66</span>
           </div>
-          <div class="coffee-item">
-            <img src="img/latte.jpg" alt="Латте">
+          <div class="coffee-item" onclick ="cookCoffee('Latte', 128, this)">
+            <img src="img/latte.jpg" alt="Латте" >
             <span>Латте - 128</span>
           </div>
         </div>
@@ -37,7 +37,7 @@
               <div class="display">
                 <span>Выберите кофе</span>
                 <div class="progress mt-2">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%"></div> <!--отключили масштабирование-->
                 </div>
               </div>
               <div class="cup mt-3">
@@ -63,6 +63,7 @@
     </div>
 
     <!-- Optional JavaScript -->
+    <!--<script src="lesson.js"></script>-->
     <script src="script.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

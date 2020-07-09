@@ -31,13 +31,14 @@ font-family: 'Roboto Slab', serif;
 } 
 .coffee-oper {
   background-color: rgba(173,0,255,255);
-  padding: 15px;
+  padding: none; /*Отключили масштабирование */
 }
 
 .display {
   border: 2px solid darkgreen;
   background-color: lightgreen;
   padding: 10px;
+  min-height:100;
 }
 .display span {
   font-family: 'Montserrat', sans-serif;
@@ -46,6 +47,10 @@ font-family: 'Roboto Slab', serif;
   width: 100%;
 }
 
+.cup img {
+  display: none;  /*Скрываем кружку и подключаем параметры прозрачности для их переопределения в js с привязкой к готовности!!!*/
+  opacity: 0;    
+}
 .change-box {
   border: 3px solid rgb(100, 100, 100);
   background-color: rgb(200, 200, 200);
