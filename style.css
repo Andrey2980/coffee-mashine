@@ -47,6 +47,11 @@ font-family: 'Roboto Slab', serif;
   width: 100%;
 }
 
+/*.bill-container {
+  position: absolute;
+  background-color: red;
+}*/
+
 .cup img {
   display: none;  /*Скрываем кружку и подключаем параметры прозрачности для их переопределения в js с привязкой к готовности!!!*/
   opacity: 0;    
@@ -56,6 +61,11 @@ font-family: 'Roboto Slab', serif;
   background-color: rgb(200, 200, 200);
   min-height: 100px;
   box-sizing: border-box;
+}
+
+.money img {      /*Управлеине классом мани, ниижний кол*/
+  max-width: 200px;
+  cursor: pointer;
 }
 
 

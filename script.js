@@ -1,4 +1,4 @@
-"usestrict";
+"use strict";
 let state = "waiting"; // "cooking" "ready"
 let balance = document.querySelector(".balance"); // Объявляем функционал строчке баланс
 let cup = document.querySelector(".cup img"); 
@@ -86,3 +86,114 @@ function changeDisplayText(text) {
   let displayText = document.querySelector(".display span"); // передаем парамиетры достаточности средств во вкладку выберите кофе
   displayText.innerHTML = text;
 }
+
+//_______________________________________________/*Drag'n'Drop*/___________________________________________
+
+//Учим купюру перемащаться в купюроприемник
+
+let money = document.querySelectorAll(".money img");
+
+for (let i = 0; i<money.length; i++) {  //получаем свойство купюр и передаем сразу на три купюры
+  money[i].onmousedown = takeMoney;
+  
+  // for(let i = 0; i < money.length; i++) {
+  // money[i].onclick = takeMoney;
+  //}
+ 
+}
+
+// В функцию, которая присвоена событию, первым параметром передается оюъектссобытия - event,
+
+
+function takeMoney(event) {
+  event.preventDefault(); // Отключение тени купюры ...???
+  /*console.log(this);    //  когда this присваетвается через атрибут onclick ( образуется функция обертка) - в даннослучае this получен из свойства onmousedown события takeMoney передается this  на событие которое совершено... 
+  console.log(event); 
+  console.log([event.target, event.clientX, event.clientY]);*/ 
+  let bill = this;
+              // Вытаскиваем купюру их дом дерева (absolut, relative, fixed) - координаты определяем относительно точек отсчета каждого метода
+  // получаем всю информацию о местоположении элемента
+ /* console.log( bill.style.height);
+  console.log(  bill.style.width);  -  это не работает*/
+  console.log( bill.getBoundingClientRect());
+  
+  let billCoords = bill.getBoundingClientRect(); //Обьявление переменной позволяющей осуществлять записи действий клиента (привязка по курсору)
+  
+  let billHeight = billCoords.height;
+  let billWidth = billCoords.width;
+  
+  bill.style.position = "absolute";
+  if (!bill.style.transform) {
+    bill.style.top = (event.clientY - billHeight/2) + "px"; // якорь картинок верхний левый угол переопределяем привязку курсора
+    bill.style.left = (event.clientX - billWidth/2)  + "px";
+    bill.style.transform = "rotate(90deg)"; // Поворот купюры  метод - transform 
+  } else {
+    bill.style.top = (event.clientY - billWidth/2) + "px"; // якорь картинок верхний левый угол переопределяем привязку курсора
+    bill.style.left = (event.clientX - billHeight/2)  + "px";
+  } 
+  bill.style.transmition ="transform .3s"; //Анимация поворота купюры 
+ 
+ window.onmousemove = function(event) {    // определяем систему оттсчета местоположения курсора сетка по размеру окна
+   /*console.log([event.clientX, event.clientY]);*/
+   let billCoords = bill.getBoundingClientRect(); //Обьявление переменной позволяющей осуществлять записи действий клиента (привязка по курсору)
+   let billHeight = billCoords.height;
+   let billWidth = billCoords.width;
+   bill.style.top = (event.clientY - billWidth/2) + "px"; // привязка купюры к курсору 
+   bill.style.left = (event.clientX - billHeight/2)  + "px";//
+ }
+ 
+ bill.onmouseup = function () {  // отвязка купюры от курсора при отжатии правой кнопки мыши купюра отваливается  
+   window.onmousemove = null;
+  // console.log ( inAtm(bill) );
+  if ( inAtm(bill) ) {
+    console.log(bill.getAttribute("data-cost") );
+    console.log( bill.dataset.cost );
+    balance.value = +balance.value + +bill.dataset.cost;
+    bill.remove(); //удаляем элемент
+  }
+ }
+}
+
+function inAtm(bill) {  //Находим и получаем координаты atm и купюр
+  let atm = document.querySelector(".atm img");
+  
+  let atmCoords = atm.getBoundingClientRect(); // вычисление диапазона купюроприемника atm
+  let atmLeftX = atmCoords.x;
+  let atmRightX = atmCoords.x + atmCoords.width;
+  let atmTopY = atmCoords.y;
+  let atmBottomY = atmCoords.y + atmCoords.height/3;
+  
+  let billCoords = bill.getBoundingClientRect(); // вычисление диапазона купюры
+  let billLeftX = billCoords.x;
+  let billRightX = billCoords.x + billCoords.width;
+  let billY = billCoords.y;
+  if(
+       billLeftX > atmLeftX
+    && billRightX < atmRightX
+    && billY > atmTopY
+    && billY < atmBottomY
+    ) {
+    return true;
+    } else {
+    return false;
+    }
+ 
+   /* atm: [atmLeftX, atmRightX, atmTopY, atmBottomY],
+    bill: [billLeftX, billRightX, billY],*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
