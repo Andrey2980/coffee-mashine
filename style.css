@@ -47,11 +47,6 @@ font-family: 'Roboto Slab', serif;
   width: 100%;
 }
 
-/*.bill-container {
-  position: absolute;
-  background-color: red;
-}*/
-
 .cup img {
   display: none;  /*Скрываем кружку и подключаем параметры прозрачности для их переопределения в js с привязкой к готовности!!!*/
   opacity: 0;    
@@ -61,18 +56,32 @@ font-family: 'Roboto Slab', serif;
   background-color: rgb(200, 200, 200);
   min-height: 100px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .money img {      /*Управлеине классом мани, ниижний кол*/
   max-width: 200px;
   cursor: pointer;
+  z-index: 1000;
 }
 
+.cash-container {
+  position: absolute;
+  /*background-color: red;*/
+  width: 70%;
+  height: 60%;
+  margin: 15% 8.3%;
+  overflow: hidden; /*Свойство присваевает невидимость элемента находящегося поверх нужных пространств, кнопок - имеющих фунеционал*/
+}
 
+.atm {
+  position: relative;
+  z-index: 10;
+}
 
-
-
-
+.change-botton, .change-box {
+  z-index: 100;
+}
 
 
 

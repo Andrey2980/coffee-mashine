@@ -146,12 +146,25 @@ function takeMoney(event) {
    window.onmousemove = null;
   // console.log ( inAtm(bill) );
   if ( inAtm(bill) ) {
-    console.log(bill.getAttribute("data-cost") );
-    console.log( bill.dataset.cost );
-    balance.value = +balance.value + +bill.dataset.cost;
-    bill.remove(); //удаляем элемент
+    let cashContainer = document.querySelector(".cash-container");
+    bill.style.position = "";
+    bill.style.transform = "rotate(90deg) translateX(25%)";
+    
+    cashContainer.append(bill); // Присоединение купюры к .cash-container
+    bill.style.transition = "transform 1.5s"; // анимация заезжания купюры
+    setTimeout(() => {
+      bill.style.transform = "rotate(90deg) translateX(-75%)";
+      bill.ontransitionend = () => { // удаление купюры после заезда
+        balance.value = +balance.value + +bill.dataset.cost; // подключение события к строчке баланса
+        bill.remove();
+      }
+    }, 10);
+    /*console.log(bill.getAttribute("data-cost") );
+    console.log( bill.dataset.cost );*/
+    /*balance.value = +balance.value + +bill.dataset.cost;
+    bill.remove();*/ //удаляем элемент
   }
- }
+ };
 }
 
 function inAtm(bill) {  //Находим и получаем координаты atm и купюр
@@ -177,11 +190,92 @@ function inAtm(bill) {  //Находим и получаем координат�
     } else {
     return false;
     }
- 
-   /* atm: [atmLeftX, atmRightX, atmTopY, atmBottomY],
-    bill: [billLeftX, billRightX, billY],*/
 }
 
+// Получение сдачи, создание элементов с использованием JS
+let changeButton = document.querySelector(".change-button"); // Привязка баланса к выдаче сдачи
+changeButton.onclick = takeChange;
+
+function takeChange() {
+  /*console.log(balance.value);*/
+  if (+balance.value >=10) {
+    createCoin("10");
+    balance.value -= 10; 
+    return setTimeout(takeChange, 300);
+  } else if (+balance.value >=5) {
+    createCoin("5");
+    balance.value -= 5; 
+    return setTimeout(takeChange, 300);
+  } else if (+balance.value >=2) {
+    createCoin("2");
+    balance.value -= 2; 
+    return setTimeout(takeChange, 300);
+  } else if (+balance.value >=1) {
+    createCoin("1");
+    balance.value -= 1; 
+    return setTimeout(takeChange, 300);
+  }
+} 
+
+function createCoin(cost) { 
+  let coinSrc = "";
+  switch (cost) {    // switch - case можно использовать только при равенстве
+    case "10":
+      coinSrc = "img/10rub.png";
+      break;
+    case "5":
+      coinSrc = "img/5rub.png";
+      break;
+    case "2":
+      coinSrc = "img/2rub.png";
+      break; 
+    case "1":
+      coinSrc = "img/1rub.png";
+      break;
+    default:
+      console.error("Такой монеты не существует");
+      /*if (cost == "10") {
+        //
+      } else if (cost == "5") {
+        //
+      } else if (cost == "2") {
+        
+      } else*/
+      // альтернативная запись
+  }
+  
+  let changeBox = document.querySelector(".change-box");
+  let coin = document.createElement("img");
+  let changeBoxWith = changeBox.getBoundingClientRect().width;
+  let changeBoxHeight = changeBox.getBoundingClientRect().height;
+  coin.setAttribute("src", coinSrc);
+  coin.style.width = "50px";
+  coin.style.cursor = "pointer";
+  coin.style.position = "absolute";//relative
+  coin.style.top = Math.floor(Math.random() * (changeBoxHeight - 50)) + "px";
+  coin.style.left = Math.floor(Math.random() * (changeBoxWith - 50)) + "px";
+  changeBox.append(coin);            // Добавляет элемент в конец контейнера
+  //changeBox.prepend(coin);        добавляет элемент в перед родительским
+  //changeBox.after(coin);         Добавляет элемент после родительского
+  //changeBox.before(coin);       Добавляет элемент до родительского
+  //changeBox.replaceWith(coin); Заменяет родительский элемент
+  coin.style.transition = "transform .5s, opasity .5s"; // Анимация падения монеток
+  coin.style.transform = "translateY(-20%)";
+  coin.style.transform = 0;
+  setTimeout(() => {                             // Функция обертка
+    coin.style.transform = "translateY(0%)";
+    coin.style.opasity = 1;
+  }, 10);                                    // При нуле работает не корректно
+  
+  coin.onclick = () => {
+    coin.style.transform = "translateY(-20%)";
+    coin.style.opasity = 0;
+    coin.ontransitionend = () => {
+      coin.remove();
+    };
+  };
+  
+}
 
 
 

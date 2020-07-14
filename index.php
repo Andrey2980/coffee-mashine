@@ -52,12 +52,15 @@
                 </div>
               </div>
               <div class="atm">
-                <div class="bill-container"></div>
+                <div class= "cash-container">
+                 </div>
                 <img src="img/bill_acc.png" alt="">
               </div>
               <button class="my-3 btn btn-primary btn-block change-button">Сдача</button>
-              <div class="change-box"></div>
-            </div>
+              <div class="change-box">
+               <!-- <img src="img/1rub.png" alt ="" style="width: 50px">-->
+              </div>
+              </div>
           </div>
         </div>
       </div>
